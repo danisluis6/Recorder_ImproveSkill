@@ -24,7 +24,8 @@ Toast.makeText(this, MainActivity.this.getTitle(), Toast.LENGTH_SHORT).show();
 - values-eo
 - ...
 ```
-- [x] Perform check permission when launch application at first.
+- [x] Using the library: <b>PagerSlidingTabStrip</b>
+<p>Access link: <a href="https://github.com/astuetz/PagerSlidingTabStrip" rel="nofollow">Get dependency</a></p>
 
 ## Structure: Folder
 
