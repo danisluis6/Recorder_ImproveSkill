@@ -1,8 +1,11 @@
-package tutorial.lorence.started.view.activity;
+package tutorial.lorence.started.view.activity.Main;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -12,7 +15,9 @@ import butterknife.BindView;
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.app.Application;
 import tutorial.lorence.started.di.module.MainModule;
-import tutorial.lorence.started.view.activity.adapter.PagerAdapterPushed;
+import tutorial.lorence.started.view.activity.BaseActivity;
+import tutorial.lorence.started.view.activity.Main.adapter.PagerAdapterPushed;
+import tutorial.lorence.started.view.activity.Setting.SettingActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -51,5 +56,23 @@ public class MainActivity extends BaseActivity {
         mTabs.setViewPager(mViewPager);
         mToolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         setSupportActionBar(mToolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent i = new Intent(this, SettingActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

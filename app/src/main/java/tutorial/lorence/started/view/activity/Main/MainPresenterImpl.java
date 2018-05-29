@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity;
+package tutorial.lorence.started.view.activity.Main;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -6,5 +6,6 @@ package tutorial.lorence.started.view.activity;
  * @version 0.0.1
  */
 
-public interface MainModel {
+
+public class MainPresenterImpl {
 }

@@ -3,8 +3,10 @@ package tutorial.lorence.started.view.activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 
 import butterknife.ButterKnife;
+import tutorial.lorence.started.R;
 
 /**
  * Created by vuongluis on 4/14/2018.

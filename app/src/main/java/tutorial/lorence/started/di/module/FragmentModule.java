@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import tutorial.lorence.started.view.activity.Setting.SettingFragment;
 import tutorial.lorence.started.view.fragment.FileViewerFragment.FileViewerFragment;
 import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 
@@ -29,6 +30,12 @@ public class FragmentModule {
     @Singleton
     RecordFragment provideRecordFragment() {
         return new RecordFragment();
+    }
+
+    @Provides
+    @Singleton
+    SettingFragment provideSettingFragment() {
+        return new SettingFragment();
     }
 
 }

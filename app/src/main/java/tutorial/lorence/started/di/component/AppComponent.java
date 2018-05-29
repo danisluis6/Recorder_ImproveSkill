@@ -6,6 +6,7 @@ import dagger.Component;
 import tutorial.lorence.started.di.module.AppModule;
 import tutorial.lorence.started.di.module.FragmentModule;
 import tutorial.lorence.started.di.module.MainModule;
+import tutorial.lorence.started.di.module.SettingModule;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -22,4 +23,5 @@ import tutorial.lorence.started.di.module.MainModule;
 )
 public interface AppComponent {
         MainComponent plus(MainModule module1);
+        SettingComponent plus(SettingModule module1);
 }

@@ -26,5 +26,8 @@ public class TitleStringUtils {
         return new String[]{mContext.getResources().getString(R.string.tab_title_record), mContext.getString(R.string.tab_title_saved_recordings)};
     }
 
+    public String[] getGroupTagFragment() {
+        return new String[]{mContext.getResources().getString(R.string.tab_title_setting)};
+    }
 
 }

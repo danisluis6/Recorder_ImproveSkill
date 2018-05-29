@@ -1,14 +1,13 @@
 package tutorial.lorence.started.di.module;
 
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.started.di.scope.ActivityScope;
 import tutorial.lorence.started.other.TitleStringUtils;
-import tutorial.lorence.started.view.activity.MainActivity;
-import tutorial.lorence.started.view.activity.adapter.PagerAdapterPushed;
+import tutorial.lorence.started.view.activity.Main.MainActivity;
+import tutorial.lorence.started.view.activity.Main.adapter.PagerAdapterPushed;
 import tutorial.lorence.started.view.fragment.FileViewerFragment.FileViewerFragment;
 import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 
@@ -36,10 +35,6 @@ public class MainModule {
     @Provides
     @ActivityScope
     FragmentManager provideFragmentManager() { return this.mainActivity.getSupportFragmentManager(); }
-
-    @Provides
-    @ActivityScope
-    TitleStringUtils provideTitleStringUtils(Context context) { return new TitleStringUtils(context); }
 
     @Provides
     @ActivityScope

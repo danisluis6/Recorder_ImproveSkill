@@ -7,6 +7,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.started.app.Application;
+import tutorial.lorence.started.container.FragmentUtils;
+import tutorial.lorence.started.other.TitleStringUtils;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -36,4 +38,12 @@ public class AppModule {
     Context provideContext() {
         return mContext;
     }
+
+    @Provides
+    @Singleton
+    TitleStringUtils provideTitleStringUtils(Context context) { return new TitleStringUtils(context); }
+
+    @Provides
+    @Singleton
+    FragmentUtils provideFragmentUtils(Context context) { return new FragmentUtils(); }
 }
