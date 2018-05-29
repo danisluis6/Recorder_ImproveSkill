@@ -9,7 +9,14 @@
 <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
 ```
-- [x] Build Structure SplashActivity > SharedMediaActivity > BaseActivity > ThemeActivity
+- [x] set/get Title in activity in Android
+```java
+<activity android:name=".MainActivity"
+            android:label="@string/app_name">
+```
+```java
+Toast.makeText(this, MainActivity.this.getTitle(), Toast.LENGTH_SHORT).show();
+```
 - [x] Create Intent-Filter in SplashActivity and access data from Intent-Filter(Implicit Intent Filter)
 - [x] Perform check permission when launch application at first.
 
