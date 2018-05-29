@@ -4,10 +4,10 @@
    ```You just do.```
   
 ## Content:
-[x] Setup Theme Splash and adjust color (PrimaryColor and StatusBarColor)
-[x] Build Structure SplashActivity > SharedMediaActivity > BaseActivity > ThemeActivity
-[x] Create Intent-Filter in SplashActivity and access data from Intent-Filter(Implicit Intent Filter)
-[x] Perform check permission when launch application at first.
+- [x] Setup Theme Splash and adjust color (PrimaryColor and StatusBarColor)
+- [x] Build Structure SplashActivity > SharedMediaActivity > BaseActivity > ThemeActivity
+- [x] Create Intent-Filter in SplashActivity and access data from Intent-Filter(Implicit Intent Filter)
+- [x] Perform check permission when launch application at first.
 
 ## Structure: Folder
 
