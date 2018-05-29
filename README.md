@@ -117,3 +117,42 @@ public class SettingFragment extends PreferenceFragment {
     }
 }
 ```
+
+```java
+@Module
+public class SettingModule {
+
+    private SettingActivity settingActivity;
+    private SettingFragment settingFragment;
+
+    public SettingModule(SettingActivity settingActivity) {
+        this.settingActivity = settingActivity;
+    }
+
+    public SettingModule(SettingFragment settingFragment) {
+        this.settingFragment = settingFragment;
+    }
+
+    @Provides
+    @ActivityScope
+    SettingActivity provideSettingActivity() {
+        return this.settingActivity;
+    }
+
+}
+```
+
+```java
+@ActivityScope
+@Subcomponent(
+
+        modules = {
+                SettingModule.class
+        }
+)
+public interface SettingComponent {
+
+    SettingActivity inject(SettingActivity activity);
+    SettingFragment inject(SettingFragment fragment);
+}
+```
