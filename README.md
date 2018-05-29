@@ -4,9 +4,25 @@
    ```You just do.```
   
 ## Content:
-- [x] How to make activity in Android not rotate. Set hard mode: Potrait
-```java
+- [x] Add Android menu toolbar
 
+```java
+@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+```
+- [x] Add Fragment into Activity and manage fragments in its activity
+
+```java
+- getSupportFragmentManager() support with android.app.v4.Fragment
+- getFragmentManager() support with android.app.Fragment
+```
+- [x] Working with PreferenceFragment and configure some attribute for the application
+
+```java
+Done => Perfect:
 ```
 ## Structure: Folder
 
