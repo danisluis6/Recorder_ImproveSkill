@@ -4,7 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import tutorial.lorence.started.view.activity.Setting.SettingFragment;
+import tutorial.lorence.started.view.fragment.LicensesFragment.LicensesFragment;
+import tutorial.lorence.started.view.fragment.SettingFragment.SettingFragment;
 import tutorial.lorence.started.view.fragment.FileViewerFragment.FileViewerFragment;
 import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 
@@ -36,6 +37,12 @@ public class FragmentModule {
     @Singleton
     SettingFragment provideSettingFragment() {
         return new SettingFragment();
+    }
+
+    @Provides
+    @Singleton
+    LicensesFragment provideLicensesFragment() {
+        return new LicensesFragment();
     }
 
 }

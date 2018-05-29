@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity.Setting;
+package tutorial.lorence.started.view.fragment.SettingFragment;
 
 /**
  * Created by vuongluis on 4/14/2018.

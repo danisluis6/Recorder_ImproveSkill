@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity.Setting;
+package tutorial.lorence.started.view.fragment.SettingFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -8,16 +8,17 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import tutorial.lorence.started.BuildConfig;
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.app.Application;
+import tutorial.lorence.started.di.module.SettingFragmentModule;
 import tutorial.lorence.started.di.module.SettingModule;
 import tutorial.lorence.started.local.AppSharedPreferences;
+import tutorial.lorence.started.view.activity.Setting.SettingActivity;
+import tutorial.lorence.started.view.fragment.LicensesFragment.LicensesFragment;
 
 @SuppressLint("ValidFragment")
 public class SettingFragment extends PreferenceFragment {
@@ -25,10 +26,20 @@ public class SettingFragment extends PreferenceFragment {
     @Inject
     Context mContext;
 
-    public Fragment newInstance(SettingFragment fragment) {
+    @Inject
+    SettingFragment mSettingFragment;
+
+    @Inject
+    SettingActivity mActivity;
+
+    @Inject
+    LicensesFragment mLicensesFragment;
+
+    public Fragment newInstance(SettingFragment fragment, SettingActivity activity) {
         Application.getInstance()
                 .getAppComponent()
-                .plus(new SettingModule(this))
+                .plus(new SettingModule(activity))
+                .plus(new SettingFragmentModule())
                 .inject(fragment);
         return fragment;
     }
@@ -54,18 +65,12 @@ public class SettingFragment extends PreferenceFragment {
         Preference aboutPref = findPreference(getString(R.string.pref_about_key));
         aboutPref.setSummary(getString(R.string.pref_about_desc, BuildConfig.VERSION_NAME));
         aboutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @SuppressLint("CommitTransaction")
             @Override
             public boolean onPreferenceClick(Preference preference) {
-//                LicensesFragment licensesFragment = new LicensesFragment();
-//                licensesFragment.show(((SettingsActivity)getActivity()).getSupportFragmentManager().beginTransaction(), "dialog_licenses");
+                mLicensesFragment.show(mActivity.getSupportFragmentManager().beginTransaction(), "dialog_licenses");
                 return true;
             }
         });
-
-        if (mContext != null) {
-            Toast.makeText(mContext, "We completely get context successfully!", Toast.LENGTH_SHORT).show();
-        } else {
-            Log.i("TAG", "NullPointerException");
-        }
     }
 }

@@ -15,6 +15,8 @@ import tutorial.lorence.started.container.FragmentUtils;
 import tutorial.lorence.started.di.module.SettingModule;
 import tutorial.lorence.started.other.TitleStringUtils;
 import tutorial.lorence.started.view.activity.BaseActivity;
+import tutorial.lorence.started.view.fragment.SettingFragment.SettingFragment;
+import tutorial.lorence.started.view.fragment.SettingFragment.SettingView;
 
 public class SettingActivity extends BaseActivity implements SettingView {
 
@@ -69,6 +71,6 @@ public class SettingActivity extends BaseActivity implements SettingView {
 
     @Override
     public void setDefaultFragment() {
-        mFragmentUtils.pushFragment(FragmentUtils.PushFrgType.REPLACE, mSettingFragment.newInstance(mSettingFragment), mTagString[0]);
+        mFragmentUtils.pushFragment(FragmentUtils.PushFrgType.REPLACE, mSettingFragment.newInstance(mSettingFragment, mActivity), mTagString[0]);
     }
 }

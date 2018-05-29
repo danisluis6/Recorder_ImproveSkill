@@ -20,4 +20,7 @@
     <string name="pref_about_title">About</string>
     <string name="pref_about_desc">v%s</string>
 
+    <!-- Dialogs -->
+    <string name="dialog_title_licenses">Open Source Licenses</string>
+
 </resources>

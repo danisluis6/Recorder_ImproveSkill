@@ -1,8 +1,5 @@
 package tutorial.lorence.started.container;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,8 +11,6 @@ import javax.inject.Inject;
 
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.view.activity.BaseActivity;
-import tutorial.lorence.started.view.activity.Main.MainActivity;
-import tutorial.lorence.started.view.activity.Setting.SettingFragment;
 
 public class FragmentUtils {
     private BaseActivity mActivity;
