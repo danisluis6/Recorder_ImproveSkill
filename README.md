@@ -13,8 +13,17 @@
         return true;
     }
 ```
-- [x] Add Android menu toolbar
+- [x] Add Fragment into Activity and manage fragments in its activity
 
+```java
+- getSupportFragmentManager() support with android.app.v4.Fragment
+- getFragmentManager() support with android.app.Fragment
+```
+- [x] Working with PreferenceFragment and configure some attribute for the application
+
+```java
+Done => Perfect:
+```
 ## Structure: Folder
 
 
