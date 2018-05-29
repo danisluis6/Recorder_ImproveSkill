@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view;
+package tutorial.lorence.started.view.activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;

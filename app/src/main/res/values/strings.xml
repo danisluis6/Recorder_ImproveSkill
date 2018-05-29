@@ -4,4 +4,8 @@
     <!-- Toolbar -->
     <string name="app_name">Sound Recorder</string>
 
+    <!-- Toolbar -->
+    <string name="tab_title_record">Record</string>
+    <string name="tab_title_saved_recordings">Saved Recordings</string>
+
 </resources>

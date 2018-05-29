@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import tutorial.lorence.started.di.module.AppModule;
+import tutorial.lorence.started.di.module.FragmentModule;
 import tutorial.lorence.started.di.module.MainModule;
 
 /**
@@ -15,9 +16,10 @@ import tutorial.lorence.started.di.module.MainModule;
 @Singleton
 @Component(
         modules = {
-                AppModule.class
+                AppModule.class,
+                FragmentModule.class
         }
 )
 public interface AppComponent {
-        MainComponent plus(MainModule module);
+        MainComponent plus(MainModule module1);
 }

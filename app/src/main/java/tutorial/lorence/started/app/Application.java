@@ -5,6 +5,7 @@ import android.content.Context;
 import tutorial.lorence.started.di.component.AppComponent;
 import tutorial.lorence.started.di.component.DaggerAppComponent;
 import tutorial.lorence.started.di.module.AppModule;
+import tutorial.lorence.started.di.module.FragmentModule;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -36,6 +37,7 @@ public class Application extends android.app.Application {
     private void initAppComponent() {
         mApplicationComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this,mContext))
+                .fragmentModule(new FragmentModule())
                 .build();
     }
 
