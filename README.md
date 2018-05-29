@@ -4,10 +4,17 @@
    ```You just do.```
   
 ## Content:
-- [x] How to make activity in Android not rotate. Set hard mode: Potrait
-```java
+- [x] Add Android menu toolbar
 
+```java
+@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 ```
+- [x] Add Android menu toolbar
+
 ## Structure: Folder
 
 
