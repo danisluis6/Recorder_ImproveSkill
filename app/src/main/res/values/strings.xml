@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Started</string>
+
+    <!-- Toolbar -->
+    <string name="app_name">Sound Recorder</string>
+
 </resources>
