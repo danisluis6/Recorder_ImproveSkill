@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity.Main;
+package tutorial.lorence.started.view.activity.home;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
@@ -14,12 +14,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.app.Application;
-import tutorial.lorence.started.di.module.MainModule;
+import tutorial.lorence.started.di.module.HomeModule;
 import tutorial.lorence.started.view.activity.BaseActivity;
-import tutorial.lorence.started.view.activity.Main.adapter.PagerAdapterPushed;
+import tutorial.lorence.started.view.activity.home.adapter.PagerAdapterPushed;
 import tutorial.lorence.started.view.activity.Setting.SettingActivity;
 
-public class MainActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -41,13 +41,13 @@ public class MainActivity extends BaseActivity {
         super.distributedDaggerComponents();
         Application.getInstance()
                 .getAppComponent()
-                .plus(new MainModule(this))
+                .plus(new HomeModule(this))
                 .inject(this);
     }
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
     @Override

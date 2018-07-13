@@ -6,8 +6,8 @@ import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.started.di.scope.ActivityScope;
 import tutorial.lorence.started.other.TitleStringUtils;
-import tutorial.lorence.started.view.activity.Main.MainActivity;
-import tutorial.lorence.started.view.activity.Main.adapter.PagerAdapterPushed;
+import tutorial.lorence.started.view.activity.home.HomeActivity;
+import tutorial.lorence.started.view.activity.home.adapter.PagerAdapterPushed;
 import tutorial.lorence.started.view.fragment.FileViewerFragment.FileViewerFragment;
 import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 
@@ -18,23 +18,23 @@ import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
  */
 
 @Module
-public class MainModule {
+public class HomeModule {
 
-    private MainActivity mainActivity;
+    private HomeActivity homeActivity;
 
-    public MainModule(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public HomeModule(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
     }
 
     @Provides
     @ActivityScope
-    MainActivity provideMainActivity() {
-        return this.mainActivity;
+    HomeActivity provideMainActivity() {
+        return this.homeActivity;
     }
 
     @Provides
     @ActivityScope
-    FragmentManager provideFragmentManager() { return this.mainActivity.getSupportFragmentManager(); }
+    FragmentManager provideFragmentManager() { return this.homeActivity.getSupportFragmentManager(); }
 
     @Provides
     @ActivityScope

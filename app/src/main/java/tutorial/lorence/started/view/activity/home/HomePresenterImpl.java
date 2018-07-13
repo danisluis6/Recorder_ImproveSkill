@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity.Main;
+package tutorial.lorence.started.view.activity.home;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -7,5 +7,5 @@ package tutorial.lorence.started.view.activity.Main;
  */
 
 
-public interface MainView {
+public class HomePresenterImpl {
 }

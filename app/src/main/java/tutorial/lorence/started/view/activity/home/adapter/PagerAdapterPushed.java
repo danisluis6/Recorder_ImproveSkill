@@ -1,4 +1,4 @@
-package tutorial.lorence.started.view.activity.Main.adapter;
+package tutorial.lorence.started.view.activity.home.adapter;
 
 
 import android.support.v4.app.Fragment;

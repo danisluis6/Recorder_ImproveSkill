@@ -1,9 +1,9 @@
 package tutorial.lorence.started.di.component;
 
 import dagger.Subcomponent;
-import tutorial.lorence.started.di.module.MainModule;
+import tutorial.lorence.started.di.module.HomeModule;
 import tutorial.lorence.started.di.scope.ActivityScope;
-import tutorial.lorence.started.view.activity.Main.MainActivity;
+import tutorial.lorence.started.view.activity.home.HomeActivity;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -15,10 +15,10 @@ import tutorial.lorence.started.view.activity.Main.MainActivity;
 @Subcomponent(
 
         modules = {
-                MainModule.class
+                HomeModule.class
         }
 )
-public interface MainComponent {
+public interface HomeComponent {
 
-    MainActivity inject(MainActivity activity);
+    HomeActivity inject(HomeActivity activity);
 }
