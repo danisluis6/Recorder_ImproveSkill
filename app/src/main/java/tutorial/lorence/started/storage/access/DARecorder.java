@@ -11,6 +11,7 @@ import java.util.List;
 
 import tutorial.lorence.started.other.Constants;
 import tutorial.lorence.started.other.Utils;
+import tutorial.lorence.started.storage.DBHelper;
 import tutorial.lorence.started.storage.DbContract;
 import tutorial.lorence.started.storage.DbHelper;
 import tutorial.lorence.started.storage.entities.RecordingItem;
@@ -167,5 +168,39 @@ public class DARecorder {
             cursor.close();
         }
         return recordingslist;
+    }
+
+    public int getCount(Context context) {
+        DbHelper dbHelper = DbHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] projection = { DBHelper.DBHelperItem._ID };
+        Cursor c = db.query(DBHelper.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
+        int count = c.getCount();
+        c.close();
+        return count;
+    }
+
+    public RecordingItem getItemAt(Context context, int position) {
+        DbHelper dbHelper = DbHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] projection = {
+                DBHelper.DBHelperItem._ID,
+                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
+                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
+                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
+                DBHelper.DBHelperItem.COLUMN_NAME_TIME_ADDED
+        };
+        Cursor c = db.query(DBHelper.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
+        if (c.moveToPosition(position)) {
+            RecordingItem item = new RecordingItem();
+            item.setId(c.getInt(c.getColumnIndex(DBHelper.DBHelperItem._ID)));
+            item.setName(c.getString(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_NAME)));
+            item.setFilePath(c.getString(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH)));
+            item.setLength(c.getInt(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH)));
+            item.setTime(c.getLong(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_TIME_ADDED)));
+            c.close();
+            return item;
+        }
+        return null;
     }
 }

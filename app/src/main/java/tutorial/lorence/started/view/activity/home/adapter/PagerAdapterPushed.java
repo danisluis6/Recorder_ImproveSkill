@@ -33,7 +33,7 @@ public class PagerAdapterPushed extends FragmentPagerAdapter {
                 return mRecordFragment;
             }
             case 1:{
-                return mFileViewerFragment.newInstance(mFileViewerFragment, position);
+                return mFileViewerFragment;
             }
         }
         return null;

@@ -22,6 +22,8 @@ import java.util.TimerTask;
 
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.storage.DBHelper;
+import tutorial.lorence.started.storage.access.DARecorder;
+import tutorial.lorence.started.storage.entities.RecordingItem;
 import tutorial.lorence.started.storage.sharepreference.MySharedPreferences;
 import tutorial.lorence.started.view.activity.home.HomeActivity;
 
@@ -29,12 +31,13 @@ public class RecordingService extends Service {
 
     private static final String LOG_TAG = "RecordingService";
 
-    private String mFileName = null;
-    private String mFilePath = null;
+    private String mFileName;
+    private String mFilePath;
 
     private MediaRecorder mRecorder = null;
 
     private DBHelper mDatabase;
+    private DARecorder mDaRecorder;
 
     private long mStartingTimeMillis = 0;
     private long mElapsedMillis = 0;
@@ -58,6 +61,7 @@ public class RecordingService extends Service {
     public void onCreate() {
         super.onCreate();
         mDatabase = new DBHelper(getApplicationContext());
+        mDaRecorder = new DARecorder();
     }
 
     @Override
@@ -111,7 +115,7 @@ public class RecordingService extends Service {
             mFileName = getString(R.string.default_file_name)
                     + "_" + (mDatabase.getCount() + count) + ".mp4";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            mFilePath += "/SoundRecorder/" + mFileName;
+            mFilePath += "/resource_audio/" + mFileName;
 
             f = new File(mFilePath);
         } while (f.exists() && !f.isDirectory());
@@ -131,7 +135,7 @@ public class RecordingService extends Service {
         mRecorder = null;
 
         try {
-            mDatabase.addRecording(mFileName, mFilePath, mElapsedMillis);
+            mDaRecorder.add(new RecordingItem(mFileName, mFilePath, 0, mElapsedMillis), getApplicationContext());
         } catch (Exception e) {
             Log.e(LOG_TAG, "exception", e);
         }

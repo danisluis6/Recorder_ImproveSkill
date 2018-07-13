@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -68,6 +70,9 @@ public class RecordFragment extends BaseFragment implements RecordView {
     private boolean mStartRecording = true;
     private boolean mPauseRecording = true;
 
+    private int mRecordPromptCount = 0;
+    private long timeWhenPaused = 0;
+
     public RecordFragment() {
 
     }
@@ -101,10 +106,10 @@ public class RecordFragment extends BaseFragment implements RecordView {
                 }
                 if (Utils.checkPermission(mHomeActivity)) {
                     onRecord(mStartRecording);
+                    mStartRecording = !mStartRecording;
                 } else {
                     Utils.settingPermission(mRecordFragment);
                 }
-                mStartRecording = !mStartRecording;
             }
         });
 
@@ -128,7 +133,43 @@ public class RecordFragment extends BaseFragment implements RecordView {
             if (!mFolder.exists()) {
                 mFolder.mkdir();
             }
+
+            // start Chronometer
+            mChronometer.setBase(SystemClock.elapsedRealtime());
+            mChronometer.start();
+            mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                @Override
+                public void onChronometerTick(Chronometer chronometer) {
+                    if (mRecordPromptCount == 0) {
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + ".");
+                    } else if (mRecordPromptCount == 1) {
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "..");
+                    } else if (mRecordPromptCount == 2) {
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "...");
+                        mRecordPromptCount = -1;
+                    }
+                    mRecordPromptCount++;
+                }
+            });
+
+            // start RecordingService
+            mHomeActivity.startService(intent);
+            // keep screen on while recording
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            // stop recording
+            mRecordButton.setImageResource(R.drawable.ic_mic_white_36dp);
+            // mPauseButton.setVisibility(View.GONE);
+            mChronometer.stop();
+            mChronometer.setBase(SystemClock.elapsedRealtime());
+            timeWhenPaused = 0;
+            mRecordingPrompt.setText(getString(R.string.record_prompt));
+
+            mHomeActivity.stopService(intent);
+            // allow the screen to turn off again once recording is finished
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+
     }
 
     @Override
@@ -147,5 +188,20 @@ public class RecordFragment extends BaseFragment implements RecordView {
     }
 
     private void onPauseRecord(boolean pause) {
+        if (pause) {
+            //pause recording
+            mPauseButton.setCompoundDrawablesWithIntrinsicBounds
+                    (R.drawable.ic_media_play ,0 ,0 ,0);
+            mRecordingPrompt.setText(getString(R.string.resume_recording_button).toUpperCase());
+            timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
+            mChronometer.stop();
+        } else {
+            //resume recording
+            mPauseButton.setCompoundDrawablesWithIntrinsicBounds
+                    (R.drawable.ic_media_pause ,0 ,0 ,0);
+            mRecordingPrompt.setText(getString(R.string.pause_recording_button).toUpperCase());
+            mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
+            mChronometer.start();
+        }
     }
 }

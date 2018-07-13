@@ -22,6 +22,13 @@ public class RecordingItem implements Parcelable {
         this.mTime = time;
     }
 
+    public RecordingItem(String mName, String mFilePath, int mLength, long mTime) {
+        this.mName = mName;
+        this.mFilePath = mFilePath;
+        this.mLength = mLength;
+        this.mTime = mTime;
+    }
+
     public RecordingItem(Parcel in) {
         mName = in.readString();
         mFilePath = in.readString();

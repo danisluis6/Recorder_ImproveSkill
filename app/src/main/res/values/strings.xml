@@ -22,7 +22,6 @@
 
     <!-- Dialogs -->
     <string name="dialog_title_licenses">Open Source Licenses</string>
-    <string name="record_prompt">Tap the button to start recording</string>
     <string name="pause_recording_button">Pause</string>
 
     <!-- Toasts -->
@@ -32,5 +31,9 @@
     <string name="toast_file_exists">The file %1$s already exists. Please choose a different file name.</string>
 
     <string name="error_permission">Permission is denied</string>
+
+    <string name="record_prompt">Tap the button to start recording</string>
+    <string name="record_in_progress">Recording</string>
+    <string name="default_file_name">My Recording</string>
 
 </resources>
