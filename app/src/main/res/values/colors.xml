@@ -4,4 +4,5 @@
     <color name="primary_dark">#D32F2F</color>
     <color name="white">#FFFFFF</color>
     <color name="tab_strip">#B42929</color>
+    <color name="accent">#FFC107</color>
 </resources>

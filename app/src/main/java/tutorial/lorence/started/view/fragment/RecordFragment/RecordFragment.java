@@ -2,11 +2,16 @@ package tutorial.lorence.started.view.fragment.RecordFragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
+
+import butterknife.BindView;
 import tutorial.lorence.started.R;
 import tutorial.lorence.started.view.fragment.BaseFragment;
 
@@ -20,15 +25,20 @@ import tutorial.lorence.started.view.fragment.BaseFragment;
 @SuppressLint("ValidFragment")
 public class RecordFragment extends BaseFragment {
 
-    private static final String ARG_POSITION = "mPosition";
-    private int mPosition;
+    @BindView(R.id.chronometer)
+    Chronometer mChronometer;
 
-    public Fragment newInstance(RecordFragment fragment, int position) {
-        Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
-        fragment.setArguments(b);
-        return fragment;
-    }
+    @BindView(R.id.recording_status_text)
+    TextView mRecordingPrompt;
+
+    @BindView(R.id.btnRecord)
+    FloatingActionButton mRecordButton;
+
+    @BindView(R.id.btnPause)
+    Button mPauseButton;
+
+    private boolean mStartRecording = true;
+    private boolean mPauseRecording = true;
 
     public RecordFragment() {
 
@@ -43,7 +53,33 @@ public class RecordFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         bindView(view);
-        mPosition = getArguments().getInt(ARG_POSITION);
+
+        mRecordButton.setColorNormal(getResources().getColor(R.color.primary));
+        mRecordButton.setColorPressed(getResources().getColor(R.color.primary_dark));
+
+        mRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+            }
+        });
+
+        mPauseButton.setVisibility(View.GONE);
+        mPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPauseRecord(mPauseRecording);
+                mPauseRecording = !mPauseRecording;
+            }
+        });
+
         return view;
+    }
+
+    private void onRecord(boolean startRecording) {
+    }
+
+    private void onPauseRecord(boolean pauseRecording) {
     }
 }

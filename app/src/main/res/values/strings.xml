@@ -22,5 +22,7 @@
 
     <!-- Dialogs -->
     <string name="dialog_title_licenses">Open Source Licenses</string>
+    <string name="record_prompt">Tap the button to start recording</string>
+    <string name="pause_recording_button">Pause</string>
 
 </resources>
