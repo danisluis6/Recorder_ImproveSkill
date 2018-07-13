@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 
 import java.util.Comparator;
 
-import tutorial.lorence.started.storage.entires.RecordingItem;
+import tutorial.lorence.started.storage.entities.RecordingItem;
 import tutorial.lorence.started.storage.listeners.OnDatabaseChangedListener;
 
 public class DBHelper extends SQLiteOpenHelper {

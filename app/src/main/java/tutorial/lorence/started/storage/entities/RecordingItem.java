@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage.entires;
+package tutorial.lorence.started.storage.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,6 +12,14 @@ public class RecordingItem implements Parcelable {
 
     public RecordingItem()
     {
+    }
+
+    public RecordingItem(int id, String name, String filepath, int length, long time) {
+        this.mId = id;
+        this.mName = name;
+        this.mFilePath = filepath;
+        this.mLength = length;
+        this.mTime = time;
     }
 
     public RecordingItem(Parcel in) {

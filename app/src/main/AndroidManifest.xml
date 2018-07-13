@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tutorial.lorence.started">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".app.Application"
         android:allowBackup="true"
@@ -24,6 +27,8 @@
         android:screenOrientation="portrait"
         android:label="@string/action_settings"
         android:parentActivityName=".view.activity.home.HomeActivity"/>
+
+        <service android:name=".service.RecordingService" />
     </application>
 
 </manifest>
