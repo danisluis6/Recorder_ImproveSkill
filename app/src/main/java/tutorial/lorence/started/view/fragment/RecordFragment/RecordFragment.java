@@ -1,6 +1,7 @@
 package tutorial.lorence.started.view.fragment.RecordFragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,13 @@ import com.melnykov.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import tutorial.lorence.started.R;
+import tutorial.lorence.started.service.RecordingService;
 import tutorial.lorence.started.view.fragment.BaseFragment;
 
 
 /**
  * Created by vuongluis on 4/14/2018.
+ *
  * @author vuongluis
  * @version 0.0.1
  */
@@ -77,7 +80,11 @@ public class RecordFragment extends BaseFragment {
         return view;
     }
 
-    private void onRecord(boolean startRecording) {
+    private void onRecord(boolean start) {
+        Intent intent = new Intent(getActivity(), RecordingService.class);
+        if (start) {
+            // TODO
+        }
     }
 
     private void onPauseRecord(boolean pauseRecording) {
