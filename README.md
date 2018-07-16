@@ -4,4 +4,4 @@
    ```You just do.```
   
 ## Content:
-- [x] Working with record and pause audio
+- [x] Notification Android
