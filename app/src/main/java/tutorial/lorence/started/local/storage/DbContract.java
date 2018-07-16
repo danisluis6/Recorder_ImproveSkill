@@ -35,6 +35,10 @@ public final class DbContract {
      */
     private static final String PRIMARY_AUTOINCREMENT = " PRIMARY KEY AUTOINCREMENT";
     /**
+     * Primary key.
+     */
+    private static final String PRIMARY_KEY = " PRIMARY KEY";
+    /**
      * Create table statement.
      */
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
