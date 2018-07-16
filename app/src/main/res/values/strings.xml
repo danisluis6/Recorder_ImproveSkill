@@ -38,5 +38,8 @@
 
     <!-- Notifications -->
     <string name="notification_recording">Recording...</string>
+    <string name="resume_recording_button">Resume</string>
+
+    <string name="send_to">Send to</string>
 
 </resources>

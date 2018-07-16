@@ -53,7 +53,7 @@ public final class DbContract {
             .append(DBHelperItem.COLUMN_NAME_RECORDING_LENGTH).append(INTEGER_TYPE)
             .append(COMMA_SEP)
             .append(DBHelperItem.COLUMN_NAME_TIME_ADDED).append(INTEGER_TYPE)
-            .append(COMMA_SEP)
+            .append(RIGHT_BRACKET_SEP)
             .toString();
     /**
      * Drop table statement.
@@ -72,7 +72,7 @@ public final class DbContract {
     }
 
     public abstract static class DBHelperItem implements BaseColumns {
-        public static final String TABLE_NAME = "saved_recordings";
+        public static final String TABLE_NAME = "recordings";
         public static final String COLUMN_NAME_RECORDING_NAME = "recording_name";
         public static final String COLUMN_NAME_RECORDING_FILE_PATH = "file_path";
         public static final String COLUMN_NAME_RECORDING_LENGTH = "length";

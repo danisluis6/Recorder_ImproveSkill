@@ -9,12 +9,12 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import tutorial.lorence.started.other.Constants;
-import tutorial.lorence.started.other.Utils;
-import tutorial.lorence.started.local.storage.DBHelper;
 import tutorial.lorence.started.local.storage.DbContract;
 import tutorial.lorence.started.local.storage.DbHelper;
 import tutorial.lorence.started.local.storage.entities.RecordingItem;
+import tutorial.lorence.started.local.storage.listeners.OnDatabaseChangedListener;
+import tutorial.lorence.started.other.Constants;
+import tutorial.lorence.started.other.Utils;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -25,14 +25,10 @@ import tutorial.lorence.started.local.storage.entities.RecordingItem;
 
 public class DARecorder {
 
-    private ContentValues getContentValues(final RecordingItem item) {
-        ContentValues values = new ContentValues();
-        values.put(DbContract.DBHelperItem._ID, item.getId());
-        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME, item.getName());
-        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH, item.getFilePath());
-        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH, item.getLength());
-        values.put(DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED, item.getTime());
-        return values;
+    private static OnDatabaseChangedListener mOnDatabaseChangedListener;
+
+    public static void setOnDatabaseChangedListener(OnDatabaseChangedListener listener) {
+        mOnDatabaseChangedListener = listener;
     }
 
     private RecordingItem getFromCursor(final Cursor cursor) {
@@ -48,9 +44,16 @@ public class DARecorder {
         long id = 0;
         DbHelper dbHelper = DbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = getContentValues(item);
+        ContentValues values = new ContentValues();
+        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME, item.getName());
+        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH, item.getFilePath());
+        values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH, item.getLength());
+        values.put(DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED, item.getTime());
         if (db != null && db.isOpen()) {
             id = db.insert(DbContract.DBHelperItem.TABLE_NAME, null, values);
+        }
+        if (mOnDatabaseChangedListener != null) {
+            mOnDatabaseChangedListener.onNewDatabaseEntryAdded();
         }
         return id;
     }
@@ -79,30 +82,65 @@ public class DARecorder {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             if (db != null && db.isOpen()) {
                 for (RecordingItem item : items) {
-                    ContentValues values = getContentValues(item);
+                    ContentValues values = new ContentValues();
+                    values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME, item.getName());
+                    values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH, item.getFilePath());
+                    values.put(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH, item.getLength());
+                    values.put(DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED, item.getTime());
                     db.insert(DbContract.DBHelperItem.TABLE_NAME, null, values);
                 }
             }
         }
     }
 
-    private String[] getProjection() {
-        return new String[]{
-                DbContract.DBHelperItem._ID,
-                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
-                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
-                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
-                DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED
-        };
-    }
-
     public ArrayList<RecordingItem> getAll(Context context) {
-        ArrayList<RecordingItem> recordingslist = new ArrayList<>();
+        ArrayList<RecordingItem> recordings = new ArrayList<>();
         DbHelper dbHelper = DbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
         if (db != null && db.isOpen()) {
-            Cursor cursor = db.query(DbContract.DBHelperItem.TABLE_NAME, getProjection(),
+            String[] projection = {
+                    DbContract.DBHelperItem._ID,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
+                    DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED
+            };
+            Cursor cursor = db.query(DbContract.DBHelperItem.TABLE_NAME, projection,
                     null, null, null, null, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                RecordingItem recordingItem;
+                do {
+                    recordingItem = getFromCursor(cursor);
+                    recordings.add(recordingItem);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return recordings;
+    }
+
+    public List<RecordingItem> searchForRecording(Context context, String data, String type) {
+        List<RecordingItem> recordingslist = new ArrayList<>();
+        DbHelper dbHelper = DbHelper.getInstance(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selection = new StringBuilder(Constants.EMPTY_STRING)
+                .append(Utils.equalsIgnoreCase(type, "name") ? DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME : DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH)
+                .append(Constants.LIKE)
+                .toString();
+
+        String[] selectionArgs = {data + Constants.LIKE_SEP};
+        if (db != null && db.isOpen()) {
+            String[] projection = {
+                    DbContract.DBHelperItem._ID,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
+                    DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
+                    DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED
+            };
+            Cursor cursor = db.query(DbContract.DBHelperItem.TABLE_NAME, projection,
+                    selection, selectionArgs, null, null, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 RecordingItem recordingItem;
@@ -145,36 +183,12 @@ public class DARecorder {
                 && db.delete(DbContract.DBHelperItem.TABLE_NAME, selection, null) > 0;
     }
 
-    public List<RecordingItem> searchForRecording(Context context, String data, String type) {
-        List<RecordingItem> recordingslist = new ArrayList<>();
-        DbHelper dbHelper = DbHelper.getInstance(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selection = new StringBuilder(Constants.EMPTY_STRING)
-                .append(Utils.equalsIgnoreCase(type, "name") ? DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME : DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH)
-                .append(Constants.LIKE)
-                .toString();
-        String[] selectionArgs = {data + Constants.LIKE_SEP};
-        if (db != null && db.isOpen()) {
-            Cursor cursor = db.query(DbContract.DBHelperItem.TABLE_NAME, getProjection(),
-                    selection, selectionArgs, null, null, null);
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                RecordingItem recordingItem;
-                do {
-                    recordingItem = getFromCursor(cursor);
-                    recordingslist.add(recordingItem);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-        return recordingslist;
-    }
-
     public int getCount(Context context) {
         DbHelper dbHelper = DbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] projection = { DBHelper.DBHelperItem._ID };
-        Cursor c = db.query(DBHelper.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
+
+        String[] projection = {DbContract.DBHelperItem._ID};
+        Cursor c = db.query(DbContract.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
         int count = c.getCount();
         c.close();
         return count;
@@ -183,21 +197,22 @@ public class DARecorder {
     public RecordingItem getItemAt(Context context, int position) {
         DbHelper dbHelper = DbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
         String[] projection = {
-                DBHelper.DBHelperItem._ID,
-                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
-                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
-                DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
-                DBHelper.DBHelperItem.COLUMN_NAME_TIME_ADDED
+                DbContract.DBHelperItem._ID,
+                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME,
+                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH,
+                DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH,
+                DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED
         };
-        Cursor c = db.query(DBHelper.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
+        Cursor c = db.query(DbContract.DBHelperItem.TABLE_NAME, projection, null, null, null, null, null);
         if (c.moveToPosition(position)) {
             RecordingItem item = new RecordingItem();
-            item.setId(c.getInt(c.getColumnIndex(DBHelper.DBHelperItem._ID)));
-            item.setName(c.getString(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_NAME)));
-            item.setFilePath(c.getString(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH)));
-            item.setLength(c.getInt(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH)));
-            item.setTime(c.getLong(c.getColumnIndex(DBHelper.DBHelperItem.COLUMN_NAME_TIME_ADDED)));
+            item.setId(c.getInt(c.getColumnIndex(DbContract.DBHelperItem._ID)));
+            item.setName(c.getString(c.getColumnIndex(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_NAME)));
+            item.setFilePath(c.getString(c.getColumnIndex(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_FILE_PATH)));
+            item.setLength(c.getInt(c.getColumnIndex(DbContract.DBHelperItem.COLUMN_NAME_RECORDING_LENGTH)));
+            item.setTime(c.getLong(c.getColumnIndex(DbContract.DBHelperItem.COLUMN_NAME_TIME_ADDED)));
             c.close();
             return item;
         }

@@ -86,18 +86,13 @@ public class RecordFragment extends BaseFragment implements RecordView {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         distributedDaggerComponents();
         bindView(view);
+        mRecordFragment = this;
         mRecordButton.setColorNormal(getResources().getColor(R.color.primary));
         mRecordButton.setColorPressed(getResources().getColor(R.color.primary_dark));
-        mRecordFragment = this;
         mRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,8 +128,6 @@ public class RecordFragment extends BaseFragment implements RecordView {
             if (!mFolder.exists()) {
                 mFolder.mkdir();
             }
-
-            // start Chronometer
             mChronometer.setBase(SystemClock.elapsedRealtime());
             mChronometer.start();
             mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -151,25 +144,17 @@ public class RecordFragment extends BaseFragment implements RecordView {
                     mRecordPromptCount++;
                 }
             });
-
-            // start RecordingService
             mHomeActivity.startService(intent);
-            // keep screen on while recording
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
-            // stop recording
             mRecordButton.setImageResource(R.drawable.ic_mic_white_36dp);
-            // mPauseButton.setVisibility(View.GONE);
             mChronometer.stop();
             mChronometer.setBase(SystemClock.elapsedRealtime());
             timeWhenPaused = 0;
             mRecordingPrompt.setText(getString(R.string.record_prompt));
-
             mHomeActivity.stopService(intent);
-            // allow the screen to turn off again once recording is finished
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-
     }
 
     @Override
@@ -183,20 +168,19 @@ public class RecordFragment extends BaseFragment implements RecordView {
                     }
                 }
                 onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
                 break;
         }
     }
 
     private void onPauseRecord(boolean pause) {
         if (pause) {
-            //pause recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
                     (R.drawable.ic_media_play ,0 ,0 ,0);
             mRecordingPrompt.setText(getString(R.string.resume_recording_button).toUpperCase());
             timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
             mChronometer.stop();
         } else {
-            //resume recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
                     (R.drawable.ic_media_pause ,0 ,0 ,0);
             mRecordingPrompt.setText(getString(R.string.pause_recording_button).toUpperCase());

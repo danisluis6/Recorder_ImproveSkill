@@ -21,7 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import tutorial.lorence.started.R;
-import tutorial.lorence.started.local.storage.DBHelper;
 import tutorial.lorence.started.local.storage.access.DARecorder;
 import tutorial.lorence.started.local.storage.entities.RecordingItem;
 import tutorial.lorence.started.local.storage.sharepreference.MySharedPreferences;
@@ -36,7 +35,6 @@ public class RecordingService extends Service {
 
     private MediaRecorder mRecorder = null;
 
-    private DBHelper mDatabase;
     private DARecorder mDaRecorder;
 
     private long mStartingTimeMillis = 0;
@@ -60,7 +58,6 @@ public class RecordingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mDatabase = new DBHelper(getApplicationContext());
         mDaRecorder = new DARecorder();
     }
 
@@ -113,7 +110,7 @@ public class RecordingService extends Service {
         do {
             count++;
             mFileName = getString(R.string.default_file_name)
-                    + "_" + (mDatabase.getCount() + count) + ".mp4";
+                    + "_" + (mDaRecorder.getCount(getApplicationContext()) + count) + ".mp3";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
             mFilePath += "/resource_audio/" + mFileName;
 
