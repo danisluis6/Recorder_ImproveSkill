@@ -36,4 +36,7 @@
     <string name="record_in_progress">Recording</string>
     <string name="default_file_name">My Recording</string>
 
+    <!-- Notifications -->
+    <string name="notification_recording">Recording...</string>
+
 </resources>

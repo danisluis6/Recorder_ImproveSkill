@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage.sharepreference;
+package tutorial.lorence.started.local.storage.sharepreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

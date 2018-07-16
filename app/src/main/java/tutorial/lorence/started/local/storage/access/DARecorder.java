@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage.access;
+package tutorial.lorence.started.local.storage.access;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,10 +11,10 @@ import java.util.List;
 
 import tutorial.lorence.started.other.Constants;
 import tutorial.lorence.started.other.Utils;
-import tutorial.lorence.started.storage.DBHelper;
-import tutorial.lorence.started.storage.DbContract;
-import tutorial.lorence.started.storage.DbHelper;
-import tutorial.lorence.started.storage.entities.RecordingItem;
+import tutorial.lorence.started.local.storage.DBHelper;
+import tutorial.lorence.started.local.storage.DbContract;
+import tutorial.lorence.started.local.storage.DbHelper;
+import tutorial.lorence.started.local.storage.entities.RecordingItem;
 
 /**
  * Created by vuongluis on 4/14/2018.

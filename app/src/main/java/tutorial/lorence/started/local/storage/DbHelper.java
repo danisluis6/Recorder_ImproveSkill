@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage;
+package tutorial.lorence.started.local.storage;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

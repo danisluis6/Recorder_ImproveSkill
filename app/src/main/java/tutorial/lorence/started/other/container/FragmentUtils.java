@@ -1,4 +1,4 @@
-package tutorial.lorence.started.container;
+package tutorial.lorence.started.other.container;
 
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;

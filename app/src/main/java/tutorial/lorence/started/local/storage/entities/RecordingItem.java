@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage.entities;
+package tutorial.lorence.started.local.storage.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;

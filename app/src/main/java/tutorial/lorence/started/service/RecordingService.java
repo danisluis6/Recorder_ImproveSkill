@@ -21,10 +21,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import tutorial.lorence.started.R;
-import tutorial.lorence.started.storage.DBHelper;
-import tutorial.lorence.started.storage.access.DARecorder;
-import tutorial.lorence.started.storage.entities.RecordingItem;
-import tutorial.lorence.started.storage.sharepreference.MySharedPreferences;
+import tutorial.lorence.started.local.storage.DBHelper;
+import tutorial.lorence.started.local.storage.access.DARecorder;
+import tutorial.lorence.started.local.storage.entities.RecordingItem;
+import tutorial.lorence.started.local.storage.sharepreference.MySharedPreferences;
 import tutorial.lorence.started.view.activity.home.HomeActivity;
 
 public class RecordingService extends Service {
@@ -98,8 +98,8 @@ public class RecordingService extends Service {
             mRecorder.start();
             mStartingTimeMillis = System.currentTimeMillis();
 
-            //startTimer();
-            //startForeground(1, createNotification());
+            startTimer();
+            startForeground(1, createNotification());
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
@@ -163,10 +163,9 @@ public class RecordingService extends Service {
                         .setContentTitle(getString(R.string.notification_recording))
                         .setContentText(mTimerFormat.format(mElapsedSeconds * 1000))
                         .setOngoing(true);
-
+        mBuilder.build().flags = Notification.FLAG_AUTO_CANCEL;
         mBuilder.setContentIntent(PendingIntent.getActivities(getApplicationContext(), 0,
-                new Intent[]{new Intent(getApplicationContext(), HomeActivity.class)}, 0));
-
+                new Intent[]{new Intent(getApplicationContext(), HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP)}, 0));
         return mBuilder.build();
     }
 }

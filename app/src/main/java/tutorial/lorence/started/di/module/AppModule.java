@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.started.app.Application;
-import tutorial.lorence.started.container.FragmentUtils;
+import tutorial.lorence.started.other.container.FragmentUtils;
 import tutorial.lorence.started.other.TitleStringUtils;
 
 /**

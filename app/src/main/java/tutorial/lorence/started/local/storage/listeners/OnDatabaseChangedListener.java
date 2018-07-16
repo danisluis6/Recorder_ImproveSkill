@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage.listeners;
+package tutorial.lorence.started.local.storage.listeners;
 
 public interface OnDatabaseChangedListener {
     void onNewDatabaseEntryAdded();

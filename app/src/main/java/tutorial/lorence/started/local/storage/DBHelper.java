@@ -1,4 +1,4 @@
-package tutorial.lorence.started.storage;
+package tutorial.lorence.started.local.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.provider.BaseColumns;
 
 import java.util.Comparator;
 
-import tutorial.lorence.started.storage.entities.RecordingItem;
-import tutorial.lorence.started.storage.listeners.OnDatabaseChangedListener;
+import tutorial.lorence.started.local.storage.entities.RecordingItem;
+import tutorial.lorence.started.local.storage.listeners.OnDatabaseChangedListener;
 
 public class DBHelper extends SQLiteOpenHelper {
 
