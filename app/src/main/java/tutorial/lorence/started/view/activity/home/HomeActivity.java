@@ -1,7 +1,6 @@
 package tutorial.lorence.started.view.activity.home;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,8 +15,8 @@ import tutorial.lorence.started.R;
 import tutorial.lorence.started.app.Application;
 import tutorial.lorence.started.di.module.HomeModule;
 import tutorial.lorence.started.view.activity.BaseActivity;
-import tutorial.lorence.started.view.activity.home.adapter.PagerAdapterPushed;
 import tutorial.lorence.started.view.activity.Setting.SettingActivity;
+import tutorial.lorence.started.view.activity.home.adapter.PagerAdapterPushed;
 
 public class HomeActivity extends BaseActivity {
 
@@ -29,9 +28,6 @@ public class HomeActivity extends BaseActivity {
 
     @BindView(R.id.tabs)
     PagerSlidingTabStrip mTabs;
-
-    @Inject
-    FragmentManager mFragmentManager;
 
     @Inject
     PagerAdapterPushed mPagerAdapterPushed;

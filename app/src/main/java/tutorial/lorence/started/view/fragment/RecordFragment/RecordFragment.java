@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,16 @@ public class RecordFragment extends BaseFragment implements RecordView {
 
     private int mRecordPromptCount = 0;
     private long timeWhenPaused = 0;
+    private int position;
+    private static final String ARG_POSITION = "position";
+
+    public static RecordFragment newInstance(int position) {
+        RecordFragment f = new RecordFragment();
+        Bundle b = new Bundle();
+        b.putInt(ARG_POSITION, position);
+        f.setArguments(b);
+        return f;
+    }
 
     public RecordFragment() {
 
@@ -83,6 +94,12 @@ public class RecordFragment extends BaseFragment implements RecordView {
                 .plus(new HomeModule((HomeActivity) getActivity()))
                 .plus(new RecordModule((HomeActivity) getActivity(), this, this))
                 .inject(this);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        position = getArguments().getInt(ARG_POSITION);
     }
 
     @Override
@@ -134,11 +151,11 @@ public class RecordFragment extends BaseFragment implements RecordView {
                 @Override
                 public void onChronometerTick(Chronometer chronometer) {
                     if (mRecordPromptCount == 0) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + ".");
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress).concat("."));
                     } else if (mRecordPromptCount == 1) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "..");
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress).concat(".."));
                     } else if (mRecordPromptCount == 2) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "...");
+                        mRecordingPrompt.setText(getString(R.string.record_in_progress).concat("..."));
                         mRecordPromptCount = -1;
                     }
                     mRecordPromptCount++;

@@ -8,8 +8,6 @@ import tutorial.lorence.started.di.scope.ActivityScope;
 import tutorial.lorence.started.other.TitleStringUtils;
 import tutorial.lorence.started.view.activity.home.HomeActivity;
 import tutorial.lorence.started.view.activity.home.adapter.PagerAdapterPushed;
-import tutorial.lorence.started.view.fragment.FileViewerFragment.FileViewerFragment;
-import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -38,8 +36,6 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    PagerAdapterPushed providePagerAdapterPushed(FragmentManager fragmentManager, TitleStringUtils titleStringUtils,
-                                                 FileViewerFragment fileViewerFragment,
-                                                 RecordFragment recordFragment) { return new PagerAdapterPushed(fragmentManager, titleStringUtils, fileViewerFragment, recordFragment); }
+    PagerAdapterPushed providePagerAdapterPushed(FragmentManager fragmentManager, TitleStringUtils titleStringUtils) { return new PagerAdapterPushed(fragmentManager, titleStringUtils); }
 
 }

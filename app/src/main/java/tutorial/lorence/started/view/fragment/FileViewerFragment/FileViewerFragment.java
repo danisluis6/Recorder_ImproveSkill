@@ -3,6 +3,7 @@ package tutorial.lorence.started.view.fragment.FileViewerFragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,17 @@ public class FileViewerFragment extends BaseFragment implements FileViewerView {
     @Inject
     FileViewerAdapter mFileViewerAdapter;
 
+    private int position;
+    private static final String ARG_POSITION = "position";
+
+    public static FileViewerFragment newInstance(int position) {
+        FileViewerFragment f = new FileViewerFragment();
+        Bundle b = new Bundle();
+        b.putInt(ARG_POSITION, position);
+        f.setArguments(b);
+        return f;
+    }
+
     public FileViewerFragment() {
     }
 
@@ -55,6 +67,7 @@ public class FileViewerFragment extends BaseFragment implements FileViewerView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        position = getArguments().getInt(ARG_POSITION);
     }
 
     @Override

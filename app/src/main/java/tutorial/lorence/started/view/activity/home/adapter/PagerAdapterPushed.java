@@ -14,15 +14,11 @@ import tutorial.lorence.started.view.fragment.RecordFragment.RecordFragment;
 public class PagerAdapterPushed extends FragmentPagerAdapter {
 
     private TitleStringUtils titles;
-    private FileViewerFragment mFileViewerFragment;
-    private RecordFragment mRecordFragment;
 
     @Inject
-    public PagerAdapterPushed(FragmentManager fm, TitleStringUtils titleStringUtils, FileViewerFragment fileViewerFragment, RecordFragment recordFragment) {
+    public PagerAdapterPushed(FragmentManager fm, TitleStringUtils titleStringUtils) {
         super(fm);
         titles = titleStringUtils;
-        mFileViewerFragment = fileViewerFragment;
-        mRecordFragment = recordFragment;
     }
 
 
@@ -30,10 +26,10 @@ public class PagerAdapterPushed extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:{
-                return mRecordFragment;
+                return RecordFragment.newInstance(position);
             }
             case 1:{
-                return mFileViewerFragment;
+                return FileViewerFragment.newInstance(position);
             }
         }
         return null;

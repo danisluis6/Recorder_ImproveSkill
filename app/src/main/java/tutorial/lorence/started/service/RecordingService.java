@@ -113,7 +113,7 @@ public class RecordingService extends Service {
                     + "_" + (mDaRecorder.getCount(getApplicationContext()) + count) + ".mp3";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
             mFilePath += "/resource_audio/" + mFileName;
-
+            Log.i("TAG", "Path of Image: " + mFilePath);
             f = new File(mFilePath);
         } while (f.exists() && !f.isDirectory());
     }
