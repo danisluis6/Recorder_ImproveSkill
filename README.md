@@ -4,4 +4,9 @@
    ```You just do.```
   
 ## Content:
-- [x] Notification Android
+- [x] Step by step to record file audio from Android device.
+> - Create a variable to handle true/false when users double-click
+```java
+mStartRecording = !mStartRecording;
+```
+> - 
