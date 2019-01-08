@@ -46,5 +46,32 @@ mRecordButton.setOnClickListener(new View.OnClickListener() {
 ```java
 String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
 ```
+>>> - Continue: We need to use MediaRecorder class (it's default of Android library)
+```java
+setFileNameAndPath();
 
->> - Problem 2: 
+mRecorder = new MediaRecorder();
+mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+mRecorder.setOutputFile(mFilePath);
+mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+mRecorder.setAudioChannels(1);
+if (MySharedPreferences.getPrefHighQuality(this)) {
+    mRecorder.setAudioSamplingRate(44100);
+    mRecorder.setAudioEncodingBitRate(192000);
+}
+
+try {
+    mRecorder.prepare();
+    mRecorder.start();
+    mStartingTimeMillis = System.currentTimeMillis();
+
+    startTimer();
+    startForeground(1, createNotification());
+
+} catch (IOException e) {
+    Log.e(LOG_TAG, "prepare() failed");
+}
+```
+
+>> - Problem 2: We will use service to execute recording audio from Android device. Please follow me if we can. Follow code.
